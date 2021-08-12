@@ -24,7 +24,8 @@ namespace SampleForFileStream
                 fileStream.Write(array, 0, array.Length);
             }
             using (FileStream filestream = new FileStream($"{path}\\test.txt", FileMode.Open))
-            { byte[] array2 = new byte[filestream.Length];
+            {
+                byte[] array2 = new byte[filestream.Length];
                 filestream.Read(array2, 0, array2.Length);
                 string readText = System.Text.Encoding.Default.GetString(array2);
                 Console.WriteLine(readText);
