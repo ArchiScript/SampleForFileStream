@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SampleForFileStream
 {
@@ -7,21 +8,39 @@ namespace SampleForFileStream
     {
         static void Main(string[] args)
         {
+            List<Person> people = new List<Person>();
+            for (int i = 1; i <= 10; i++)
+            {
+                people.Add(new Person { Name = $"Name{i}", Age = 10+i });
+            }
+            
             //D:\WEBDEV\SampleForFileStream
-            string path = Path.Combine("D:", "WEBDEV", "SampleForFileStream", "TestFiles");
+            //G:\C#Projects\SampleForFileStream
+            //string path = Path.Combine("D:", "WEBDEV", "SampleForFileStream", "TestFiles");
+            string path = Path.Combine("G:", "C#Projects", "SampleForFileStream", "TestFiles");
             DirectoryInfo directoryInfo = new DirectoryInfo(path);
 
             if (!directoryInfo.Exists)
             {
                 directoryInfo.Create();
             }
-            Console.WriteLine("Введите текст");
-            var text = Console.ReadLine();
+            //Console.WriteLine("Введите текст");
+            //var text = Console.ReadLine();
 
-            using (FileStream fileStream = new FileStream($"{path}\\test.txt", FileMode.Append))
+            
+
+
+           // using (FileStream filestream1 = new FileStream(path, FileMode.Truncate ))
+            using (FileStream fileStream = new FileStream($"{path}\\test.txt", FileMode.Truncate))
             {
-                byte[] array = System.Text.Encoding.Default.GetBytes(text);
-                fileStream.Write(array, 0, array.Length);
+                foreach (var item in people)
+                {
+                    
+                    string text = $"{item.Name} {Convert.ToString(item.Age)} {Environment.NewLine}";
+                    byte[] array = System.Text.Encoding.Default.GetBytes(text);
+                    fileStream.Write(array, 0, array.Length);
+                }
+                
             }
             using (FileStream filestream = new FileStream($"{path}\\test.txt", FileMode.Open))
             {
